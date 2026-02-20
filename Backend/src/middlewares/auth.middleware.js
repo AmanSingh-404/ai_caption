@@ -1,29 +1,33 @@
 const jwt = require("jsonwebtoken")
 const userModel = require("../models/user.model")
 
-async function authMiddleware (req, res, next){
+async function authMiddleware(req, res, next) {
     const token = req.cookies.token;
 
-    if(!token){
+    console.log("Cookies:", req.cookies); // Debugging
+    console.log("Token:", token); // Debugging
+
+    if (!token) {
         return res.status(401).json({
-            message:"unotherized"
+            message: "Unauthorized: No token provided"
         })
     }
 
-    try{
+    try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         const user = await userModel.findById(decoded.id)
-        if(!user){
-            return res.status(404).json({
-                message:"user not found"
+        if (!user) {
+            return res.status(401).json({
+                message: "Unauthorized: User not found"
             })
         }
         res.user = user
         next()
     }
-    catch(err){
-        return res.status(403).json({
-                message:"forbidden"
+    catch (err) {
+        console.error("JWT Verification Error:", err.message);
+        return res.status(401).json({
+            message: "Unauthorized: Invalid token"
         })
     }
 }

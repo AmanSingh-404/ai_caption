@@ -25,11 +25,7 @@ const CreatePost = () => {
         formData.append('image', file);
 
         try {
-            await api.post('/api/post', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            await api.post('/api/post', formData);
             navigate('/');
         } catch (error) {
             console.error('Error creating post:', error);
@@ -70,8 +66,8 @@ const CreatePost = () => {
                 onClick={handleSubmit}
                 disabled={!file || loading}
                 className={`w-full p-3 rounded font-bold transition-colors ${!file || loading
-                        ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
-                        : 'bg-blue-600 hover:bg-blue-700 text-white'
+                    ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                    : 'bg-blue-600 hover:bg-blue-700 text-white'
                     }`}
             >
                 {loading ? 'Generating Caption & Posting...' : 'Create Post with AI Caption'}
