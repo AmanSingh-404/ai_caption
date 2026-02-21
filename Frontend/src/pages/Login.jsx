@@ -8,7 +8,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.type]: e.target.value });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
@@ -29,6 +29,7 @@ const Login = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <input
                         type="text"
+                        name="username"
                         placeholder="Username"
                         value={formData.username}
                         onChange={handleChange}
@@ -36,6 +37,7 @@ const Login = () => {
                     />
                     <input
                         type="password"
+                        name="password"
                         placeholder="Password"
                         value={formData.password}
                         onChange={handleChange}
